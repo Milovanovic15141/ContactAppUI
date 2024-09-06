@@ -1,0 +1,35 @@
+<div class="container">
+  <h2>Contacts</h2>
+
+  <form *ngIf="isEditing" (ngSubmit)="addOrUpdateContact(selectedContact!)">
+    <input type="text" [(ngModel)]="selectedContact!.name" name="name" placeholder="Name" required />
+    <input type="text" [(ngModel)]="selectedContact!.phoneNumber" name="phoneNumber" placeholder="Phone Number" required />
+    <div class="form-buttons">
+      <button class="save-btn" type="submit">Save</button>
+      <button class="cancel-btn" type="button" (click)="isEditing = false; selectedContact = null;">Cancel</button>
+    </div>
+  </form>
+
+  <div *ngIf="!isEditing">
+    <button class="add-btn" (click)="selectedContact = { id: 0, name: '', phoneNumber: '' }; isEditing = true;">Add New Contact</button>
+    <table class="contacts-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone Number</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of contacts">
+          <td>{{ contact.name }}</td>
+          <td>{{ contact.phoneNumber }}</td>
+          <td>
+            <button class="edit-btn" (click)="selectContact(contact)">Edit</button>
+            <button class="delete-btn" (click)="deleteContact(contact.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
