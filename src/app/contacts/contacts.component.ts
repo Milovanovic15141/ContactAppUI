@@ -3,6 +3,8 @@ import { Contact } from '../models/contact.model';
 import { ContactService } from '../contact.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contacts',
@@ -17,9 +19,13 @@ export class ContactsComponent {
 
   isEditing = false;
 
-  constructor(private contactsService: ContactService) {}
+  constructor(private contactsService: ContactService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    if(!this.authService.getToken()){
+      this.router.navigate(['/login']);
+    }
+
     this.loadContacts();
   }
 
